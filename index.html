@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 50%, #ffd4ea 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.15;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-50px) rotate(10deg);
+            }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 60px 40px;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            max-width: 600px;
+            position: relative;
+            z-index: 10;
+            border: 3px solid #ffb3d9;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            color: #ff1493;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+            animation: pulse 2s infinite;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .image-container {
+            margin: 30px auto;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border-radius: 20px;
+            padding: 20px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .placeholder-text {
+            font-size: 1.2rem;
+            color: #ff69b4;
+            font-weight: 600;
+        }
+
+        .meme-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .button-container {
+            position: relative;
+            margin-top: 40px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 100%);
+            color: white;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        #noBtn {
+            background: linear-gradient(135deg, #ddd 0%, #bbb 100%);
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff1493;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .success-message {
+            display: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #ff1493;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji {
+            font-size: 4rem;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+        }
+
+        .question-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #ff1493;
+            margin: 20px 0;
+            min-height: 50px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="love_for_you_loveli.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="heart-bg" id="heartBg"></div>
+    
+    <div class="container">
+        <div class="image-container">
+            <img src="😗.jpg" alt="Cute meme" class="meme-image">
+        </div>
+        
+        <h1>Will You Be My Valentine Sowhan?? 💖</h1>
+
+        <div class="emoji" id="emoji">🥺</div>
+        
+        <div class="question-text" id="questionText"></div>
+        
+        <div class="button-container" id="buttonContainer">
+            <button class="btn" id="yesBtn">Yes! 💕</button>
+            <button class="btn" id="noBtn">No</button>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            Yay! I knew you'd say yes! 💖✨
+        </div>
+
+        <div class="image-container" id="bottomImage" style="margin-top: 30px;">
+            <img src="😒.jpg" alt="Another cute meme" class="meme-image">
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const successMessage = document.getElementById('successMessage');
+        const emoji = document.getElementById('emoji');
+        const questionText = document.getElementById('questionText');
+        const heartBg = document.getElementById('heartBg');
+        const bottomImage = document.getElementById('bottomImage');
+        const bgMusic = document.getElementById('bgMusic');
+
+        let noClickCount = 0;
+
+        // Try to autoplay music immediately
+        window.addEventListener('load', () => {
+            bgMusic.play().catch(e => {
+                console.log("Autoplay prevented, will play on first interaction");
+                // Fallback: play on first interaction if autoplay is blocked
+                document.addEventListener('click', () => {
+                    bgMusic.play();
+                }, { once: true });
+            });
+        });
+
+        // Create floating hearts background
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heartBg.appendChild(heart);
+        }
+
+        // Handle "No" button clicks
+        noBtn.addEventListener('click', () => {
+            noClickCount++;
+            
+            if (noClickCount === 1) {
+                emoji.textContent = '😢';
+                questionText.textContent = 'Are you sure? 😢';
+            } else if (noClickCount === 2) {
+                emoji.textContent = '😭';
+                questionText.textContent = 'Please think again';
+            } else if (noClickCount === 3) {
+                emoji.textContent = '😠';
+                questionText.textContent = 'Kyu re madarchod 😠';
+            } else if (noClickCount === 4) {
+                emoji.textContent = '😍';
+                questionText.textContent = 'Now make your final choice 😍';
+                noBtn.textContent = 'Yes! 💕';
+                noBtn.style.background = 'linear-gradient(135deg, #ff1493 0%, #ff69b4 100%)';
+                noBtn.style.color = 'white';
+            } else if (noClickCount >= 5) {
+                // If they click the converted "No" button (now "Yes")
+                showSuccess();
+            }
+        });
+
+        // Success when clicking "Yes"
+        yesBtn.addEventListener('click', () => {
+            showSuccess();
+        });
+
+        function showSuccess() {
+            buttonContainer.style.display = 'none';
+            successMessage.style.display = 'block';
+            questionText.style.display = 'none';
+            emoji.textContent = '🥰';
+            
+            // Change bottom image to celebration GIF
+            const celebrationImg = document.createElement('img');
+            celebrationImg.src = 'love cats.gif';
+            celebrationImg.alt = 'Celebration';
+            celebrationImg.className = 'meme-image';
+            bottomImage.innerHTML = '';
+            bottomImage.appendChild(celebrationImg);
+            
+            // Create confetti effect
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = ['#ff1493', '#ff69b4', '#ffc0cb', '#ff91c7'][Math.floor(Math.random() * 4)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
